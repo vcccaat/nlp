@@ -1,35 +1,21 @@
 Table of Contents
 =================
 
-  \* [Table of Contents](#table-of-contents)
-
-  \* [Data Preparation](#data-preparation)
-
-  \* [Seq2Seq with Attention](#seq2seq-with-attention)
-
-   \* [Introduction](#introduction)
-
-   \* [Network architecture](#network-architecture)
-
-  \* [Pointer-generator](#pointer-generator)
-
-   \* [Introduction](#introduction-1)
-
-   \* [Network architecture](#network-architecture-1)
-
-​     \* [Copy distribution](#copy-distribution)
-
-​     \* [Coverage mechanism](#coverage-mechanism)
-
-   \* [Implementation](#implementation)
-
-   \* [Model Evaluation](#model-evaluation)
-
-   \* [Result for financial dataset](#result-for-financial-dataset)
-
-  \* [BERT](#bert)
-
-  \* [Sentiment Analysis](#sentiment-analysis)
+   * [Table of Contents](#table-of-contents)
+   * [Data Preparation](#data-preparation)
+   * [Seq2Seq with Attention](#seq2seq-with-attention)
+      * [Introduction](#introduction)
+      * [Network architecture](#network-architecture)
+   * [Pointer-generator](#pointer-generator)
+      * [Introduction](#introduction-1)
+      * [Network architecture](#network-architecture-1)
+         * [Copy distribution](#copy-distribution)
+         * [Coverage mechanism](#coverage-mechanism)
+      * [Implementation](#implementation)
+      * [Model Evaluation](#model-evaluation)
+      * [Result for financial dataset](#result-for-financial-dataset)
+   * [BERT](#bert)
+   * [Sentiment Analysis](#sentiment-analysis)
 
 <br><br>
 
@@ -61,19 +47,19 @@ Table of Contents
 
 Encoder contains the input words that want to be transformed (translate, generate summary), and each word is a vector that go through forward and backward activation with bi-directional RNN. Then calculate the attention value for each words in encoder reflects its importance in a sentence. Decoder generates the output word one at a time, by taking dot product of the feature vector and their corresponding attention for each timestamp. 
 
-![image-20200210110013495](readme.assets/image-20200210110013495.png) 
+![image-20200210123710672](readme.assets/image-20200210123710672.png)  
 
-<br><br>
+<br>
 
 ## Network architecture
 
-![image-20200207155242372](readme.assets/image-20200207155242372.png) 
+![image-20200210123616083](readme.assets/image-20200210123616083.png)  
 
 * **Encoder**: Bi-directional RNN, feature vector `a` at timestamp `t` is the concatenation of forward RNN and backward RNN 
 
   ![image-20200210110118887](readme.assets/image-20200210110118887.png)  
 
-  <br><br>
+  <br>
 
 * **Attention**: ![img](readme.assets/clip_image002-1065144.png): the amount of attention ![img](readme.assets/clip_image002-1062674.png) should pay to ![img](readme.assets/clip_image002-1062690.png)
 
@@ -91,13 +77,13 @@ Encoder contains the input words that want to be transformed (translate, generat
 
     ![image-20200210110149495](readme.assets/image-20200210110149495.png)  
 
-    <br><br>
+    <br>
 
 * **Decoder**: RNN of dot product between attention and activation
 
   ![image-20200210121232055](readme.assets/image-20200210121232055.png)  
 
-<br><br><br><br>
+<br><br>
 
 # Pointer-generator 
 
@@ -105,15 +91,17 @@ Encoder contains the input words that want to be transformed (translate, generat
 
 Abstrative text summarization requires sequence-to-sequence models, these models have two shortcomings: they are liable to reproduce factual details inaccurately, and they tend to repeat themselves. The state-of-the-art pointer-generator model came up by Google Brain at 2017 solves these problems. In addition to attention model, it add two features: first, it **copys** words from the source text via *pointing* which aids accurate repro- duction of information. Second, it uses **coverage** to keep track of what has been summarized, which discourages repetition. 
 
-![image-20200210105957682](readme.assets/image-20200210105957682.png) 
+![image-20200210123647436](readme.assets/image-20200210123647436.png) 
 
-<br><br>
+<br>
 
 ## Network architecture
 
 In addition to attention, we add two things:
 
+<br>
 
+<br>
 
 ### Copy distribution
 
@@ -123,7 +111,7 @@ In addition to attention, we add two things:
 
   ![image-20200207164857450](readme.assets/image-20200207164857450.png) 
 
-   <br><br>
+   <br>
 
 * **Combine** copy distribution `Pcopy`with general attention vocabulary distribution `Pvocab`(computed in attention earlier: ![img](readme.assets/clip_image002-1062650.png)) with certain weight `Pgen`:  *p*gen ∈ [0, 1] for timestep *t* is calculated from the context vector `a`∗, the decoder state `s`and the decoder input `c` :
 
@@ -131,7 +119,7 @@ In addition to attention, we add two things:
 
   ![image-20200210121130835](readme.assets/image-20200210121130835.png) 
 
-  <br><br>
+  <br>
 
 * **Training**: use `Pfinal` to compute sigmoid probability  
 
@@ -191,25 +179,25 @@ Incoming...
 
 focused on social media and short texts unlike Financial News, used available package in nltk, easy to use.
 
-<br><br>
+<br>
 
 **CNN**
 
 on yelp dataset
 
-<br><br>
+<br>
 
 **LSTM** with transformer
 
 on yelp dataset
 
-<br><br>
+<br>
 
 **DPCNN**
 
 on yelp dataset
 
-<br><br>
+<br>
 
 **Deep and Wide Learning (Google)**
 
