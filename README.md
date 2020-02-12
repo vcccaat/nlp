@@ -51,12 +51,12 @@ Table of Contents
      pip install pyrouge
     ```
   
-  * 
-  
 * **Data Preprocessing Pipeline for Reuters Dataset**:
   * tokenize text using corenlp-stanford
   * generate test.bin file
-  * use pointer-generator output summary
+  * use pointer-generator output summary （incoming...）
+  
+* **Sample extractive summary for CNN news:** [Here](https://github.com/vcccaat/nlp/tree/master/text-summarization/sample_summary)
 
 <br><br>
 
