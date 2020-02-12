@@ -1,0 +1,77 @@
+This directory contains a pre-trained model similar to that described in the paper "Get To The Point: Summarization with Pointer-Generator Networks" https://arxiv.org/pdf/1704.04368.pdf.
+
+Due to differences in the code used for the original experiment, and the publicly-released code (e.g. upgrading to Tensorflow 1.0, cleaning up the code), it is not possible to release the original model.
+
+CONTENTS:
+
+train/
+  checkpoint
+    used by Tensorflow to point to the latest checkpoint
+  events.out.tfevents.*
+    Tensorboard files recording summaries from training
+    To see the Tensorboard record from training, run Tensorboard from the root directory (i.e pretrained_model)
+  graph.pbtxt
+    contains the Tensorflow graph
+  model-238410.*
+    the checkpoint files
+  pre-coverage/
+    Contains the checkpoint files for the model before the coverage training phase began. If you want to train the no-coverage model more before introducing coverage, use this model.
+  projector_config.pbtxt
+    For the word embedding visualizer in Tensorboard.
+  vocab_metadata.tsv
+    For the word embedding visualizer in Tensorboard.
+
+eval/
+  events.out.tfevents.*
+    Tensorboard files recording summaries from evaluation
+
+decode_test_400maxenc_4beam_35mindec_120maxdec_ckpt/
+  decoded/
+    The generated summaries on the test set
+  reference/
+    The reference summaries on the test set
+  ROUGE_results.txt
+    The ROUGE results on the test set
+
+
+TRAINING DETAILS:
+
+The model was trained by a similar method to that described in the paper, though we used the following, slightly different schedule for increasing max_enc_steps and max_dec_steps:
+
+Start with max_enc_steps=10, max_dec_steps=10
+At about 71k iterations, increase to max_enc_steps=50, max_dec_steps=50
+At about 116k iterations, increase to max_enc_steps=100, max_dec_steps=50
+At about 184k iterations, increase to max_enc_steps=200, max_dec_steps=50
+At about 223k iterations, increase to max_enc_steps=400, max_dec_steps=100
+
+These changes are reflected in the global_step/sec summaries in Tensorboard.
+  Note: the increase in global_step/sec at around 195k is because we changed the "default_device" setting in the code, which was more efficient (this change is now committed to the github repository).
+
+Note: the concurrent eval job was run with max_enc_steps=400 and max_dec_steps=100 throughout, which likely explains why the eval loss was less than the train loss for most of training time.
+
+
+TO DO MORE TRAINING YOURSELF:
+
+If you want to train the model some more (with coverage), run (from the pointer-generator directory)
+
+python run_summarization.py --mode=train --data_path=/path/to/data/train_* --vocab_path=/path/to/data/vocab --log_root=/path/to/directory/containing/pretrained_model --exp_name=pretrained_model --max_enc_steps=400 --max_dec_steps=100 --coverage=1
+
+Note: you can alter e.g. max_enc_steps and max_dec_steps and other hyperparameters if you wish
+
+
+TO RUN (CONCURRENT) EVAL:
+
+python run_summarization.py --mode=eval --data_path=/path/to/data/val_* --vocab_path=/path/to/data/vocab --log_root=/path/to/directory/containing/pretrained_model --exp_name=pretrained_model --max_enc_steps=400 --max_dec_steps=100 --coverage=1
+
+
+TO RUN DECODE ON THE DATA:
+
+The command that produced the decode_test_400maxenc_4beam_35mindec_120maxdec_ckpt directory (including ROUGE eval on entire test set) was:
+
+python run_summarization.py --mode=decode --data_path=/Users/sze/Desktop/nlp/text-summarization/tokenized_news/test.bin  --vocab_path=/Users/sze/Desktop/nlp-dataset-algo/model/preprocessing/cnn-dailymail-preprocessing/finished_files/vocab  --log_root=/Users/sze/Desktop/nlp-dataset-algo/model/--exp_name=pretrained_model --max_enc_steps=400 --max_dec_steps=120 --coverage=1 --single_pass=1
+
+If you'd like to see randomly-generated examples from the validation set print to screen, run:
+
+python run_summarization.py --mode=decode --data_path=/path/to/data/val_* --vocab_path=/path/to/data/vocab --log_root=/path/to/directory/containing/pretrained_model --exp_name=pretrained_model --max_enc_steps=400 --max_dec_steps=120 --coverage=1
+
+Note, this will also produce a constant stream of .json data files in the decode/ directory. These files can be visualized with the attention visualizer https://github.com/abisee/attn_vis which will allow you to see where the model is attending, and the values of the generation probabilities.
