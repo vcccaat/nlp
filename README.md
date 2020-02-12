@@ -27,17 +27,36 @@ Table of Contents
     * Yelp Review Dataset
   * Financial
     * [Reuters dataset (100k news) ](https://github.com/duynht/financial-news-dataset)
-* **Packages used**:
+  
+* **Environment**
+  
+  * Python 3.6
+  * tensorflow 1.2.1
+  
+* **Packages used**
+  
   * nltk 
-  * keras
+  
   * pandas
+  
   * sklearn
+  
   * numpy
+  
   * corenlp-stanford
+  
+  * pyrouge  
+  
+    ```python -m pip uninstall pip 
+     pip install pyrouge
+    ```
+  
+  * 
+  
 * **Data Preprocessing Pipeline for Reuters Dataset**:
-  * tokenize 
-  * remove stop words
-  * ... 
+  * tokenize text using corenlp-stanford
+  * generate test.bin file
+  * use pointer-generator output summary
 
 <br><br>
 
@@ -145,11 +164,37 @@ record certain sentences that have appear in decoder many times
 
 ## Implementation
 
- [**GitHub Code Here**](https://github.com/vcccaat/pointer-generator)
+* **Training  from scratch: **[**GitHub Code Here**](https://github.com/vcccaat/pointer-generator)
+
+* **Transfer learning**
+
+  Use a  pre-trained model which is a saved network that was previously trained  by others on a large dataset. Then I don't need to re-train the model with number of hours starting from scratch (for this model it takes around 7 days to train the data), and the pre-trained model built from the massive dataset could already effectively served as a generic model of the visual world.
+
+  The pre-trained model I used:  [Version for Tensorflow 1.2.1](https://drive.google.com/file/d/0B7pQmm-OfDv7ZUhHZm9ZWEZidDg/view?usp=sharing)
+
+  You need to install the correct version of tensorflow:
+
+  ```python
+  pip install tensorflow==1.2.1
+  ```
 
 <br><br>
 
 ## Model Evaluation
+
+![image-20200212102144483](README.assets/image-20200212102144483.png) 
+
+![image-20200212102302631](README.assets/image-20200212102302631.png) 
+
+![image-20200212102320925](README.assets/image-20200212102320925.png) 
+
+**Metrics**
+
+**ROUGE-1**：overlap of **unigrams** between the system generated summary and reference summary / number of 1-gram in reference summary
+
+**ROUGE-2**： overlap of **bigrams** between the system generated summary and reference summaries / number of 2-gram in reference summary
+
+**ROUGE-L**： overlap of **LCS** (Longest Common Subsequence) between system generated summary and reference summaries / number of 1-gram in reference summary
 
 ![image-20200210105922693](readme.assets/image-20200210105922693.png) 
 
