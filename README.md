@@ -1,3 +1,7 @@
+Models are credited to [Xin Pan Peter Liu](https://github.com/tensorflow/models/tree/master/research/textsum) and [Google Brain](https://github.com/vcccaat/pointer-generator)
+
+
+
 Table of Contents
 =================
 
@@ -31,8 +35,8 @@ Table of Contents
 
 * **Environment**
 
-  * Python 3.6
-  * tensorflow 1.2.1
+  * Python=3.6
+  * tensorflow=1.2.1
 
 * **Packages used**
 
@@ -42,15 +46,11 @@ Table of Contents
 
   * sklearn
 
-  * numpy
+  * numpy=1.16
 
   * corenlp-stanford
 
-  * pyrouge  
-
-    ```python -m pip uninstall pip 
-     pip install pyrouge
-    ```
+  * pyrouge  (pip install)
 
 * **Data Preprocessing Pipeline for Reuters Dataset**:
 
@@ -86,9 +86,7 @@ Encoder contains the input words that want to be transformed (translate, generat
 
   * Done by a neural network takes previous word ![img](assets/clip_image002-1062718-1492445.png) in the decoder and ![img](assets/clip_image002-1062690-1492445.png) in the encoder generate ![img](assets/clip_image002-1062765-1492445.png) go through softmax to generate ![img](assets/clip_image002-1062650-1492445.png)
 
-  
-
-           ![image-20200206104243639](assets/image-20200206104243639.png) ![image-20200207180539638](assets/image-20200207180539638.png)   
+  ![image-20200206104243639](assets/image-20200206104243639.png) ![image-20200207180539638](assets/image-20200207180539638.png)   
 
   * additive attention for neural network: 
 
@@ -103,6 +101,8 @@ Encoder contains the input words that want to be transformed (translate, generat
 * **Decoder**: RNN of dot product between attention and activation
 
   ![image-20200210121232055](assets/image-20200210121232055-1492445.png)  
+  
+  **Beam search** is used in decoder to  keep up to *k* most likely words choice, where *k* is a user-specified parameter (beam width).
 
 <br><br>
 
@@ -166,7 +166,7 @@ record certain sentences that have appear in decoder many times
 
 ## Implementation
 
-* **Training  from scratch: **[**GitHub Code Here**](https://github.com/vcccaat/pointer-generator)
+* **Training  from scratch:** [**GitHub Code Here**](https://github.com/vcccaat/pointer-generator)
 
 * **Transfer learning**
 
@@ -184,13 +184,15 @@ record certain sentences that have appear in decoder many times
 
 ## Model Evaluation
 
+**Model Performance**
+
 ![image-20200212102144483](assets/image-20200212102144483-1492445.png) 
 
 ![image-20200212102302631](assets/image-20200212102302631-1492445.png) 
 
 ![image-20200212102320925](assets/image-20200212102320925-1492445.png) 
 
-**Metrics**
+**Metrics used:**
 
 **ROUGE-1**：overlap of **unigrams** between the system generated summary and reference summary / number of 1-gram in reference summary
 

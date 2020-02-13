@@ -1,6 +1,8 @@
 
 import os
 import subprocess
+from tensorflow.core.example import example_pb2
+import struct
 
 SENTENCE_START = '<s>'
 SENTENCE_END = '</s>'
@@ -67,19 +69,35 @@ def get_art_abs(story_file):
 
 	return article, abstract
 
-news_dir = '/Users/sze/Desktop/nlp/text-summarization/test_financial_news'
-tokenized_news_dir = '/Users/sze/Desktop/nlp/text-summarization/tokenized_news'
-finished_files_dir = '/Users/sze/Desktop/nlp/text-summarization/tokenized_news'
-story_file = '/Users/sze/Desktop/nlp/text-summarization/tokenized_news/test01.story'
-out_file = os.path.join(finished_files_dir, "test.bin")
+
+
+news_dir = '/Users/sze/Desktop/nlp/text-summarization/test/news'
+tokenized_news_dir = '/Users/sze/Desktop/nlp/text-summarization/test/pre-tokenized'
+finished_files_dir = '/Users/sze/Desktop/nlp/text-summarization/test/tokenized_news'
+story_file = '/Users/sze/Desktop/nlp/text-summarization/test/pre-tokenized/test01.story'
+
 if not os.path.exists(tokenized_news_dir): 
     os.makedirs(tokenized_news_dir)
+if not os.path.exists(finished_files_dir): 
+    os.makedirs(finished_files_dir)   
 
 
  # Run stanford tokenizer on both stories dirs, outputting to tokenized stories directories
 tokenize_news(news_dir, tokenized_news_dir)
 
-with open(out_file, 'wb') as writer:
-	# Get the strings to write to .bin file
-	article, abstract = get_art_abs(story_file)
+# some preprocessing of toeknized text
+article, abstract = get_art_abs(story_file)
+
+# at this stage, only need article 
+with open(os.path.join(finished_files_dir,"tokenized_news.bin"), "wb") as writer:
+    # Write to tf.Example
+    tf_example = example_pb2.Example()
+    tf_example.features.feature['article'].bytes_list.value.extend([article.encode()])
+    tf_example.features.feature['abstract'].bytes_list.value.extend([abstract.encode()])
+    tf_example_str = tf_example.SerializeToString()
+    str_len = len(tf_example_str)
+    writer.write(struct.pack('q', str_len))
+    writer.write(struct.pack('%ds' % str_len, tf_example_str))
+
+    print("Finished writing file tokenized_news.bin")
 

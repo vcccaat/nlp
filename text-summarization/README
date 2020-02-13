@@ -68,7 +68,7 @@ TO RUN DECODE ON THE DATA:
 
 The command that produced the decode_test_400maxenc_4beam_35mindec_120maxdec_ckpt directory (including ROUGE eval on entire test set) was:
 
-python run_summarization.py --mode=decode --data_path=/Users/sze/Desktop/nlp/text-summarization/tokenized_news/test.bin  --vocab_path=/Users/sze/Desktop/nlp-dataset-algo/model/preprocessing/cnn-dailymail-preprocessing/finished_files/vocab  --log_root=/Users/sze/Desktop/nlp-dataset-algo/model/--exp_name=pretrained_model --max_enc_steps=400 --max_dec_steps=120 --coverage=1 --single_pass=1
+python run_summarization.py --mode=decode --data_path=/Users/sze/Desktop/nlp/text-summarization/tokenized_news/test.bin  --vocab_path=/Users/sze/Desktop/nlp-dataset-algo/model/preprocessing/cnn-dailymail-preprocessing/finished_files/vocab  --log_root=/Users/sze/Desktop/nlp-dataset-algo/model/ --exp_name=pretrained_model --max_enc_steps=400 --max_dec_steps=120 --coverage=1 --single_pass=1
 
 If you'd like to see randomly-generated examples from the validation set print to screen, run:
 
