@@ -37,8 +37,7 @@ Table of Contents
 
   * Python=3.6
   * tensorflow=1.2.1
-
-* **Packages used**
+  * numpy=1.16
 
   * nltk 
 
@@ -46,19 +45,26 @@ Table of Contents
 
   * sklearn
 
-  * numpy=1.16
-
   * corenlp-stanford
 
   * pyrouge  (pip install)
 
-* **Data Preprocessing Pipeline for Reuters Dataset**:
+* **Pretrain-model** 
 
-  * tokenize text using corenlp-stanford
-  * generate test.bin file
-  * use pointer-generator output summary （incoming...）
+  * [Version for Tensorflow 1.2.1](https://drive.google.com/file/d/0B7pQmm-OfDv7ZUhHZm9ZWEZidDg/view?usp=sharing)
 
-* **Sample extractive summary for CNN news:** [Here](https://github.com/vcccaat/nlp/tree/master/text-summarization/sample_summary)
+<br><br>
+
+# Pipeline for Financial Dataset
+
+* tokenize text using corenlp-stanford
+* generate test.bin file
+* use pointer-generator output summary 
+
+<br>
+
+* **Sample abstractive summary for CNN news:** [Here](https://github.com/vcccaat/nlp/tree/master/text-summarization/sample_summary)
+* **Test abstractive summary for financial news**: [Here](https://github.com/vcccaat/nlp/tree/master/text-summarization/test)
 
 <br><br>
 
@@ -174,13 +180,7 @@ record certain sentences that have appear in decoder many times
 
   The pre-trained model I used:  [Version for Tensorflow 1.2.1](https://drive.google.com/file/d/0B7pQmm-OfDv7ZUhHZm9ZWEZidDg/view?usp=sharing)
 
-  You need to install the correct version of tensorflow:
-
-  ```python
-  pip install tensorflow==1.2.1
-  ```
-
-<br><br>
+  <br><br>
 
 ## Model Evaluation
 
