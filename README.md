@@ -50,7 +50,7 @@ Table of Contents
 
   * pyrouge  
 
-* **Pretrain-model** 
+* **Pretrain model** 
 
   * [Version for Tensorflow 1.2.1](https://drive.google.com/file/d/0B7pQmm-OfDv7ZUhHZm9ZWEZidDg/view?usp=sharing)
 
@@ -58,17 +58,21 @@ Table of Contents
 
 # Pipeline for Financial Dataset
 
-* tokenize text using corenlp-stanford `python test_summary.py`
+* Use pretrain model for financial news (currently based on non-financial news CNN/Dailymail)
 
-* stored in test.bin
+* Tokenize test financial news using corenlp-stanford `python test_summary.py`
 
-* use pre-train model to decode 
+* Preprocess tokenized financial news and store in test.bin
+
+* Use pointer generator network to load pretrain model to decode (generate summary)
 
   ```
-  python run_summarization.py --mode=eval --data_path=/path/to/data/test.bin --vocab_path=/path/to/data/vocab --log_root=/path/to/directory/containing/pretrained_model --exp_name=pretrained_model --max_enc_steps=400 --max_dec_steps=100 --coverage=1
+  python run_summarization.py --mode=decode --data_path=/path/to/data/test.bin --vocab_path=/path/to/data/vocab --log_root=/path/to/directory/containing/pretrained_model --exp_name=pretrained_model --max_enc_steps=400 --max_dec_steps=100 --coverage=1
   ```
 
-  you can adjust number of encode (input passage length) and decode step (ouput summary length)
+  Adjust number of encode (input passage length) and decode step (ouput summary length)
+
+* Visualize the result 
 
 <br>
 
@@ -76,29 +80,33 @@ Table of Contents
 
   <br>
 
-## Result for financial news
+## Result and Visualization
 
-* Visualize the attention network with [this](https://github.com/abisee/attn_vis)
+**Visualize the attention network** [this](https://github.com/abisee/attn_vis)
 
-  For Python3 run: `python -m http.server`
+For Python3 run: `python -m http.server`
 
-  * result with coverage and output 100 words:
+<br>
 
-  ![image-20200214130722462](assets/image-20200214130722462.png) 
+**result with coverage and output 100 words**
 
-  * result with coverage and output 50 words:
+![image-20200214130722462](assets/image-20200214130722462.png) 
 
-    machine copy the whole sentence in the paragraph...
+<br>
 
-  ![image-20200214131136402](assets/image-20200214131136402.png)
+**result with coverage and output 50 words**
 
-  * result without coverage and output 100 words:
+machine copy the whole sentence in the paragraph...
 
-    machine copy the whole sentence in the paragraph...
+![image-20200214131136402](assets/image-20200214131136402.png)
 
-  * ![image-20200214133323672](assets/image-20200214133323672.png)
+<br>
 
+**result without coverage and output 100 words**
 
+machine copy the whole sentence in the paragraph...
+
+![image-20200214133323672](assets/image-20200214133323672.png)
 
 <br><br>
 
