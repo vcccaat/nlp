@@ -7,6 +7,9 @@ import struct
 SENTENCE_START = '<s>'
 SENTENCE_END = '</s>'
 
+
+os.putenv('CLASSPATH','/Users/sze/Desktop/nlp-dataset-algo/model/preprocessing/stanford-corenlp-full-2018-10-05/stanford-corenlp-3.9.2.jar')
+
 def tokenize_news(news_dir, tokenized_news_dir):
 #     for more than one news:
 #     """Maps a whole directory of .story files to a tokenized version using Stanford CoreNLP Tokenizer"""
@@ -74,7 +77,9 @@ def get_art_abs(story_file):
 news_dir = '/Users/sze/Desktop/nlp/text-summarization/test/news'
 tokenized_news_dir = '/Users/sze/Desktop/nlp/text-summarization/test/pre-tokenized'
 finished_files_dir = '/Users/sze/Desktop/nlp/text-summarization/test/tokenized_news'
-story_file = '/Users/sze/Desktop/nlp/text-summarization/test/pre-tokenized/test01.story'
+story_file = '/Users/sze/Desktop/nlp/text-summarization/test/pre-tokenized/testR.story'
+# story_fileCNN = '/Users/sze/Desktop/nlp/text-summarization/test/pre-tokenized/testCNN.story'
+# story_fileR = '/Users/sze/Desktop/nlp/text-summarization/test/pre-tokenized/testR.story'
 
 if not os.path.exists(tokenized_news_dir): 
     os.makedirs(tokenized_news_dir)
@@ -85,7 +90,7 @@ if not os.path.exists(finished_files_dir):
  # Run stanford tokenizer on both stories dirs, outputting to tokenized stories directories
 tokenize_news(news_dir, tokenized_news_dir)
 
-# some preprocessing of toeknized text
+# some preprocessing of tokenized text
 article, abstract = get_art_abs(story_file)
 
 # at this stage, only need article 

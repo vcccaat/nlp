@@ -7,17 +7,18 @@ Table of Contents
 
    * [Table of Contents](#table-of-contents)
    * [Data Preparation](#data-preparation)
+   * [Pipeline for Financial Dataset](#pipeline-for-financial-dataset)
+      * [Result for financial news](#result-for-financial-news)
    * [Seq2Seq with Attention](#seq2seq-with-attention)
-     * [Introduction](#introduction)
-     * [Network architecture](#network-architecture)
+      * [Introduction](#introduction)
+      * [Network architecture](#network-architecture)
    * [Pointer-generator](#pointer-generator)
-     * [Introduction](#introduction-1)
-     * [Network architecture](#network-architecture-1)
-       * [Copy distribution](#copy-distribution)
-       * [Coverage mechanism](#coverage-mechanism)
-     * [Implementation](#implementation)
-     * [Model Evaluation](#model-evaluation)
-     * [Result for financial dataset](#result-for-financial-dataset)
+      * [Introduction](#introduction-1)
+      * [Network architecture](#network-architecture-1)
+         * [Copy distribution](#copy-distribution)
+         * [Coverage mechanism](#coverage-mechanism)
+      * [Implementation](#implementation)
+      * [Model Evaluation](#model-evaluation)
    * [BERT](#bert)
    * [Sentiment Analysis](#sentiment-analysis)
 
@@ -47,7 +48,7 @@ Table of Contents
 
   * corenlp-stanford
 
-  * pyrouge  (pip install)
+  * pyrouge  
 
 * **Pretrain-model** 
 
@@ -57,14 +58,47 @@ Table of Contents
 
 # Pipeline for Financial Dataset
 
-* tokenize text using corenlp-stanford
-* generate test.bin file
-* use pointer-generator output summary 
+* tokenize text using corenlp-stanford `python test_summary.py`
+
+* stored in test.bin
+
+* use pre-train model to decode 
+
+  ```
+  python run_summarization.py --mode=eval --data_path=/path/to/data/test.bin --vocab_path=/path/to/data/vocab --log_root=/path/to/directory/containing/pretrained_model --exp_name=pretrained_model --max_enc_steps=400 --max_dec_steps=100 --coverage=1
+  ```
+
+  you can adjust number of encode (input passage length) and decode step (ouput summary length)
 
 <br>
 
 * **Sample abstractive summary for CNN news:** [Here](https://github.com/vcccaat/nlp/tree/master/text-summarization/sample_summary)
-* **Test abstractive summary for financial news**: [Here](https://github.com/vcccaat/nlp/tree/master/text-summarization/test)
+
+  <br>
+
+## Result for financial news
+
+* Visualize the attention network with [this](https://github.com/abisee/attn_vis)
+
+  For Python3 run: `python -m http.server`
+
+  * result with coverage and output 100 words:
+
+  ![image-20200214130722462](assets/image-20200214130722462.png) 
+
+  * result with coverage and output 50 words:
+
+    machine copy the whole sentence in the paragraph...
+
+  ![image-20200214131136402](assets/image-20200214131136402.png)
+
+  * result without coverage and output 100 words:
+
+    machine copy the whole sentence in the paragraph...
+
+  * ![image-20200214133323672](assets/image-20200214133323672.png)
+
+
 
 <br><br>
 
@@ -176,9 +210,7 @@ record certain sentences that have appear in decoder many times
 
 * **Transfer learning**
 
-  Use a  pre-trained model which is a saved network that was previously trained  by others on a large dataset. Then I don't need to re-train the model with number of hours starting from scratch (for this model it takes around 7 days to train the data), and the pre-trained model built from the massive dataset could already effectively served as a generic model of the visual world.
-
-  The pre-trained model I used:  [Version for Tensorflow 1.2.1](https://drive.google.com/file/d/0B7pQmm-OfDv7ZUhHZm9ZWEZidDg/view?usp=sharing)
+  Use a  pre-trained model ([Version for Tensorflow 1.2.1](https://drive.google.com/file/d/0B7pQmm-OfDv7ZUhHZm9ZWEZidDg/view?usp=sharing)) which is a saved network that was previously trained  by others on a large dataset. Then I don't need to re-train the model with number of hours starting from scratch (for this model it takes around 7 days to train the data), and the pre-trained model built from the massive dataset could already effectively served as a generic model of the visual world.
 
   <br><br>
 
@@ -210,11 +242,7 @@ record certain sentences that have appear in decoder many times
 
 <br><br>
 
-## Result for financial dataset
 
-Incoming.. 
-
-<br><br><br><br>
 
 # BERT
 
