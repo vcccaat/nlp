@@ -1,6 +1,6 @@
 Models are credited to [Xin Pan Peter Liu](https://github.com/tensorflow/models/tree/master/research/textsum) and [Google Brain](https://github.com/vcccaat/pointer-generator)
 
-
+Papers and references [Awesome text summarization](https://github.com/mathsyouth/awesome-text-summarization)
 
 Table of Contents
 =================
@@ -107,6 +107,32 @@ machine copy the whole sentence in the paragraph...
 machine copy the whole sentence in the paragraph...
 
 ![image-20200214133323672](assets/image-20200214133323672.png)
+
+
+
+<br><br>
+
+## Sumy software for text summarization
+
+Convenience to extract news from url or text document, sumy has several algorithms to select important sentence from the article: luhn | edmundson | lsa | text-rank | lex-rank | sum-basic | kl
+
+**Install**
+
+`pip install sumy`
+
+**Example**
+
+```
+sumy sum-basic --length=2 --url=https://edition.cnn.com/2020/02/16/asia/coronavirus-wuhan-china-recovery-intl-hnk/index.html
+```
+
+Output:
+
+> Like Zhang, Ye has recovered from the deadly novel coronavirus.
+>
+> "So please go to the hospital for examination as soon as possible when you got it.
+
+
 
 <br><br>
 
