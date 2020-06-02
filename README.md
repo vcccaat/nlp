@@ -1,4 +1,4 @@
-Models are credited to [Xin Pan Peter Liu](https://github.com/tensorflow/models/tree/master/research/textsum) and [Google Brain](https://github.com/vcccaat/pointer-generator)
+Models credited to [Xin Pan Peter Liu](https://github.com/tensorflow/models/tree/master/research/textsum) and [Google Brain](https://github.com/vcccaat/pointer-generator)
 
 Papers and references [Awesome text summarization](https://github.com/mathsyouth/awesome-text-summarization)
 
@@ -19,8 +19,6 @@ Table of Contents
          * [Coverage mechanism](#coverage-mechanism)
       * [Implementation](#implementation)
       * [Model Evaluation](#model-evaluation)
-   * [BERT](#bert)
-   * [Sentiment Analysis](#sentiment-analysis)
 
 <br><br>
 
@@ -277,39 +275,3 @@ record certain sentences that have appear in decoder many times
 <br><br>
 
 
-
-# BERT
-
-Incoming...
-
-<br><br><br><br>
-
-# Sentiment Analysis
-
-**VADER**
-
-focused on social media and short texts unlike Financial News, used available package in nltk, easy to use.
-
-<br>
-
-**CNN**
-
-on yelp dataset
-
-<br>
-
-**LSTM** with transformer
-
-on yelp dataset
-
-<br>
-
-**DPCNN**
-
-on yelp dataset
-
-<br>
-
-**Deep and Wide Learning (Google)**
-
-on yelp dataset
